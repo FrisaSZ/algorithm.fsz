@@ -20,6 +20,16 @@ def merge(l, lo, mid, hi):
             j += 1
 
 
+def top_down_sort(l, lo, hi):
+    if lo >= hi:
+        return
+    mid = lo + (hi - lo) // 2
+    top_down_sort(l, lo, mid)
+    top_down_sort(l, mid + 1, hi)
+    merge(l, lo, mid, hi)
+
+
+''' 测试merge算法
 L = np.random.permutation(100)
 left = L[:50]
 right = L[50:]
@@ -35,4 +45,11 @@ print('-' * 64)
 print(right)
 L = np.append(left, right)
 merge(L, 0, 49, 99)
+print(L)
+'''
+
+L = np.random.permutation(10000)
+print(L)
+print('-' * 64)
+top_down_sort(L, 0, len(L) - 1)
 print(L)
