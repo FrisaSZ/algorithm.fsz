@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 
 def merge(l, lo, mid, hi):
@@ -29,6 +30,17 @@ def top_down_sort(l, lo, hi):
     merge(l, lo, mid, hi)
 
 
+def bottom_up_sort(l):
+    N = len(l)
+    sz = 1
+    while sz < N:
+        lo = 0
+        while lo < N - sz:
+            merge(l, lo, lo + sz - 1, min(lo + 2 * sz - 1, N - 1))
+            lo += 2 * sz
+        sz += sz
+
+
 ''' 测试merge算法
 L = np.random.permutation(100)
 left = L[:50]
@@ -48,8 +60,18 @@ merge(L, 0, 49, 99)
 print(L)
 '''
 
-L = np.random.permutation(10000)
+L = np.random.permutation(100000)
+L_copy = L.copy()
 print(L)
 print('-' * 64)
+start = time.time()
 top_down_sort(L, 0, len(L) - 1)
+duration = time.time() - start
+print('time cost {}'.format(duration))
 print(L)
+print('-' * 64)
+start = time.time()
+bottom_up_sort(L_copy)
+duration = time.time() - start
+print('time cost {}'.format(duration))
+print(L_copy)
